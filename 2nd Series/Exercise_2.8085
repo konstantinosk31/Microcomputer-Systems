@@ -1,0 +1,36 @@
+		MVI C,64H	; Timer initialization C = 100 (total ms in 0.1 seconds)
+		MVI D,00H	; Counter initialisation D = 0
+INIT_ON:	LDA 2000H	; Read the input from the dip switches
+		CPI 7FH 	; 0111 1111b
+		JNC INIT_ON	; If MSB set, switch initially ON
+OFF_STATE:	LDA 2000H	; Read the input from the dip switches
+		CPI 7FH 	; 0111 1111b
+		JC OFF_STATE 	; if MSB unset, repeat OFF_STATE
+ON_STATE:	MOV A,D	; Move counter D to A
+		CPI 00H	; Check if D is equal to 0
+		JZ SKIP_DEL	; If yes, skip delay
+		PUSH D		; Push D to stack in case it changes in the call
+		CALL DELB	; Delay for 0.1 seconds
+		POP D		; Pop D from stack
+		DCR D		; Decrease counter D
+		JNZ SKIP_DEL	; If D != 0, skip updating the LEDs
+		MVI A,FFH 	; Set A to 1111 1111b to clear all LEDs
+		STA 3000H	; Output A to the (negative logic) LED's
+SKIP_DEL:	LDA 2000H	; Read the input from the dip switches
+		CPI 7FH 	; 0111 1111b
+		JNC ON_STATE 	; if MSB set, repeat ON_STATE
+		MVI D,32H	; Counter initialisation D = 50 (50*0.1 = 20 seconds)
+DELAY:		XRA A		; Clear A to open all LED's
+		STA 3000H	; Output A to the (negative logic) LED's
+		PUSH D		; Push D to stack in case it changes in the call
+		CALL DELB	; Delay for 0.1 seconds
+		POP D		; Pop D from stack
+		LDA 2000H	; Read the input from the dip switches
+		CPI 7FH 	; 0111 1111b
+		JNC ON_STATE	; If MSB set, repeat ON_STATE (and continue delaying)
+		DCR D		; Decrease the counter
+		JNZ DELAY	; If not reached 10 seconds, repeat DELAY state
+		MVI A,FFH 	; Set A to 1111 1111b to clear all LEDs
+		STA 3000H	; Output A to the (negative logic) LED's
+		JMP OFF_STATE	; Stop delaying and go to OFF_STATE
+END
