@@ -1,0 +1,27 @@
+START:	LDA 2000H		; Get number from input dip switches
+        CPI C7H    		; Is greater than 199
+        JNC OVER200    	; If yes, light all LEDs and get next number
+        CPI 63H    		; Is greater than 99
+        JC UNDER100    	; If not, continue to output its digits
+        SUI 64H    		; If yes, subtract 100 to keep its last 2 digits
+UNDER100:	MVI B,FFH	; FFH stands for -1 in signed two's complement arithmetic
+DECA:
+        INR B			; Increase the tens counter
+        SUI 0AH    		; Subtract 10
+        JNC DECA    	; If A is positive, continue subtracting 10s
+        ADI 0AH    		; Else, fix the negative remainder
+        MOV C,A    		; Store A's value (units) for later
+        MOV A,B    		; Store the number of tens in A
+        RLC        		; Shift the tens to the 4MSBs
+        RLC
+        RLC
+        RLC        
+        ORA C        	; Put the units in the 4 LSBs        
+        CMA        		; The LEDs have negative logic and we want positive
+        STA 3000H    	; Print the answer to the LEDs output
+        JMP START    	; Get the next number
+OVER200:
+        XRA A        	; Clear A so that all LEDs will light up
+        STA 3000H    	; Print the answer to the LEDs output
+        JMP START    	; Get the next number
+END

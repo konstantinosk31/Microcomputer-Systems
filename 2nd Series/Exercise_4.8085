@@ -38,8 +38,30 @@
 	ORA L		; A[0] = (A2 XOR B2) OR (A3 XOR B3)
 	MV H,A		; H[0] = (A2 XOR B2) OR (A3 XOR B3). STORED IN H
 
-	MVI B,FFH	; B = 1111 1111b
-	MV A,L	; A[0] = A3 XOR B3	
-	ANA B		; B[0] = A3 XOR B3
-	
-	
+	MVI B,01H	; B = 0000 0001b. Initialise Mask
+	MVI C,00H	; C = 0000 0000b. Initialise Result	
+
+	MV A,L		; A[0] = X_3	
+	CALL LOAD1 	; C[1] = X_3, C[else] = 0
+
+	MV A,H		; A[0] = X_2
+	CALL LOAD1	; C[1] = X_2, C[2] = X_3, C[else] = 0
+
+	MV A,E		; A[0] = X_1
+	CALL LOAD1	; C[1] = X_1, C[2] = X_2, C[3] = X_3
+
+	MV A,
+
+LOAD1:			; C<<=1, C[1] = A[0], C[0] = 0
+	ANA B		; Get bit
+	ORA C		; Add to result. Updated result in A
+	RLC		; Shift A 1 position to the left
+	MV C,A		; Updated result in C
+	RET		; Return to main program
+
+LOAD1:			; C[0] = A[0]
+
+	ANA B		; Get bit
+	ORA C		; Add to result. Updated result in A
+	MV C,A		; Updated result in C
+	RET		; Return to main program
