@@ -1,0 +1,45 @@
+	LDA 2000H
+
+	MV B,A 	; B[0] = B0
+	RRC		; A[0] = A0
+	MV C,A		; C = (2000H)>>2
+	ANA B		; A[0] = A0 AND B0
+	MV D,A		; D[0] = A0 AND B0. STORED IN D (for now)
+	MV A,C		; A = (2000H)>>2
+	RRC		; A = (2000H)>>3
+	
+	MV B,A		; B[0] = B1
+	RRC		; A[0] = A1
+	MV C,A		; C = (2000H)>>4
+	ANA B		; A[0] = A1 AND B1
+	MV E,A		; E[0] = A1 AND B1. STORED IN E
+	MV A,C		; A = (2000H)>>5
+	RRC		; A = (2000H)>>6
+	
+	MV B,A		; B[0] = B2
+	RRC		; A[0] = A2
+	MV C,A		; C = (2000H)>>6
+	XRA B		; A[0] = A2 XOR B2
+	MV H,A		; H[0] = A2 XOR  B2. STORED IN H (for now)
+	MV A,C		; A = (2000H)>>5
+	RRC		; A = (2000H)>>6
+
+	MV B,A		; B[0] = B3
+	RRC		; A[0] = A3
+	MV C,A		; C = (2000H)>>7
+	XRA B		; A[0] = A3 XOR B3
+	MV L,A		; L[0] = A3 XOR B3. STORED IN L
+	
+	MV A,D		; A[0] = A0 AND B0
+	ORA E		; A[0] = (A0 AND B0) OR (A1 AND B1)
+	MV D,A		; D[0] = (A0 AND B0) OR (A1 AND B1). STORED IN D
+	
+	MV A,H		; A[0] = A2 XOR B2
+	ORA L		; A[0] = (A2 XOR B2) OR (A3 XOR B3)
+	MV H,A		; H[0] = (A2 XOR B2) OR (A3 XOR B3). STORED IN H
+
+	MVI B,FFH	; B = 1111 1111b
+	MV A,L	; A[0] = A3 XOR B3	
+	ANA B		; B[0] = A3 XOR B3
+	
+	
