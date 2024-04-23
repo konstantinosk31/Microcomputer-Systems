@@ -1,0 +1,30 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega328PB"</DEVICE>
+ <WORKING_DIR>c:\users\konst\Documents\Atmel Studio\7.0\Exercise1_2\Exercise1_2\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>c:\users\konst\Documents\Atmel Studio\7.0\Exercise1_2\Exercise1_2\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328PBdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>c:\users\konst\Documents\Atmel Studio\7.0\Exercise1_2\Exercise1_2\Debug\Exercise1_2.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Exercise1_2.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Exercise1_2.map</FILE>
+  <FILE>Exercise1_2.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <Output><FILE>c:\users\konst\Documents\Atmel Studio\7.0\Exercise1_2\Exercise1_2\main.asm</FILE><LINE>11</LINE></Output>
+  <Start><FILE>c:\users\konst\Documents\Atmel Studio\7.0\Exercise1_2\Exercise1_2\main.asm</FILE><LINE>14</LINE></Start>
+  <Right><FILE>c:\users\konst\Documents\Atmel Studio\7.0\Exercise1_2\Exercise1_2\main.asm</FILE><LINE>26</LINE></Right>
+  <Left><FILE>c:\users\konst\Documents\Atmel Studio\7.0\Exercise1_2\Exercise1_2\main.asm</FILE><LINE>17</LINE></Left>
+ </LABELS>
+</ASSEMBLER_INFO>
