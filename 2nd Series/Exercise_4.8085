@@ -1,67 +1,75 @@
+	LXI SP,0BB0H	; Initialize Stack Pointer
 	LDA 2000H
 
-	MV B,A 	; B[0] = B0
+	MOV B,A 	; B[0] = B0
 	RRC		; A[0] = A0
-	MV C,A		; C = (2000H)>>2
+	MOV C,A	; C = (2000H)>>2
 	ANA B		; A[0] = A0 AND B0
-	MV D,A		; D[0] = A0 AND B0. STORED IN D (for now)
-	MV A,C		; A = (2000H)>>2
+	MOV D,A	; D[0] = A0 AND B0. STORED IN D (for now)
+	MOV A,C	; A = (2000H)>>2
 	RRC		; A = (2000H)>>3
 	
-	MV B,A		; B[0] = B1
+	MOV B,A	; B[0] = B1
 	RRC		; A[0] = A1
-	MV C,A		; C = (2000H)>>4
+	MOV C,A	; C = (2000H)>>4
 	ANA B		; A[0] = A1 AND B1
-	MV E,A		; E[0] = A1 AND B1. STORED IN E
-	MV A,C		; A = (2000H)>>5
+	MOV E,A	; E[0] = A1 AND B1. STORED IN E
+	MOV A,C	; A = (2000H)>>5
 	RRC		; A = (2000H)>>6
 	
-	MV B,A		; B[0] = B2
+	MOV B,A	; B[0] = B2
 	RRC		; A[0] = A2
-	MV C,A		; C = (2000H)>>6
+	MOV C,A	; C = (2000H)>>6
 	XRA B		; A[0] = A2 XOR B2
-	MV H,A		; H[0] = A2 XOR  B2. STORED IN H (for now)
-	MV A,C		; A = (2000H)>>5
+	MOV H,A	; H[0] = A2 XOR  B2. STORED IN H (for now)
+	MOV A,C	; A = (2000H)>>5
 	RRC		; A = (2000H)>>6
 
-	MV B,A		; B[0] = B3
+	MOV B,A	; B[0] = B3
 	RRC		; A[0] = A3
-	MV C,A		; C = (2000H)>>7
+	MOV C,A	; C = (2000H)>>7
 	XRA B		; A[0] = A3 XOR B3
-	MV L,A		; L[0] = A3 XOR B3. STORED IN L
+	MOV L,A	; L[0] = A3 XOR B3. STORED IN L
 	
-	MV A,D		; A[0] = A0 AND B0
+	MOV A,D	; A[0] = A0 AND B0
 	ORA E		; A[0] = (A0 AND B0) OR (A1 AND B1)
-	MV D,A		; D[0] = (A0 AND B0) OR (A1 AND B1). STORED IN D
+	MOV D,A	; D[0] = (A0 AND B0) OR (A1 AND B1). STORED IN D
 	
-	MV A,H		; A[0] = A2 XOR B2
+	MOV A,H	; A[0] = A2 XOR B2
 	ORA L		; A[0] = (A2 XOR B2) OR (A3 XOR B3)
-	MV H,A		; H[0] = (A2 XOR B2) OR (A3 XOR B3). STORED IN H
+	MOV H,A	; H[0] = (A2 XOR B2) OR (A3 XOR B3). STORED IN H
 
 	MVI B,01H	; B = 0000 0001b. Initialise Mask
 	MVI C,00H	; C = 0000 0000b. Initialise Result	
 
-	MV A,L		; A[0] = X_3	
+	MOV A,L	; A[0] = X_3	
 	CALL LOAD1 	; C[1] = X_3, C[else] = 0
 
-	MV A,H		; A[0] = X_2
+	MOV A,H	; A[0] = X_2
 	CALL LOAD1	; C[1] = X_2, C[2] = X_3, C[else] = 0
 
-	MV A,E		; A[0] = X_1
+	MOV A,E	; A[0] = X_1
 	CALL LOAD1	; C[1] = X_1, C[2] = X_2, C[3] = X_3
 
-	MV A,
+	MOV A,D	; A[0] = X_3
+	CALL LOAD2	; C[0..3] = X_[0..3], C[else] = 0
+
+	MOV A,C	; Move result to A
+	CMA		; Complement A to get result in negative logic
+	STA 3000H	; Output the result to the LEDs
 
 LOAD1:			; C<<=1, C[1] = A[0], C[0] = 0
 	ANA B		; Get bit
 	ORA C		; Add to result. Updated result in A
 	RLC		; Shift A 1 position to the left
-	MV C,A		; Updated result in C
+	MOV C,A	; Updated result in C
 	RET		; Return to main program
 
-LOAD1:			; C[0] = A[0]
+LOAD2:			; C[0] = A[0]
 
 	ANA B		; Get bit
 	ORA C		; Add to result. Updated result in A
-	MV C,A		; Updated result in C
+	MOV C,A	; Updated result in C
 	RET		; Return to main program
+
+END
