@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-04-24T18:42:36.442Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0" etag="8lg7bM_TS_aW9-zDkIqf" version="24.2.8" type="github">
+<mxfile host="app.diagrams.net" modified="2024-04-24T18:43:22.491Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0" etag="066DzvhnKHtUsBnjRF-q" version="24.2.8" type="github">
   <diagram name="Page-1" id="wMXihCremsNAc0sntlir">
     <mxGraphModel dx="875" dy="448" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -453,6 +453,22 @@
         </mxCell>
         <mxCell id="qIAUx_opdsWf-stqVEPp-9" value="" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;shape=mxgraph.electrical.logic_gates.inverting_contact;" vertex="1" parent="1">
           <mxGeometry x="220" y="439" width="10" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="qIAUx_opdsWf-stqVEPp-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#ffe6cc;strokeColor=#d79b00;endArrow=none;endFill=0;" edge="1" parent="1" source="dRk_QViRMOGvH4dLuAci-46" target="qIAUx_opdsWf-stqVEPp-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="80" y="248" />
+              <mxPoint x="80" y="103" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qIAUx_opdsWf-stqVEPp-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#d5e8d4;strokeColor=#82b366;endArrow=none;endFill=0;" edge="1" parent="1" source="dRk_QViRMOGvH4dLuAci-45" target="qIAUx_opdsWf-stqVEPp-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="90" y="203" />
+              <mxPoint x="90" y="95" />
+            </Array>
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
