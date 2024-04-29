@@ -1,0 +1,160 @@
+IN 10H ; No memory protection
+
+START:
+LXI D,0B00H ; Big address, no conflict
+MVI A,10H ; Idle char (fist four pos)
+STA 0B00H
+STA 0B01H
+STA 0B02H
+STA 0B03H ; Idle is one byte long
+
+; NOW READING
+
+LINE_0:
+	MVI A,FEH ; Line 11111110
+	STA 2800H
+	LDA 1800H ; Read column
+	MVI B,07H 
+	ANA B ; 0 the first 5 MSB
+	MVI B,86H
+	CPI 06H ; INSTR_STEP???
+	JZ SHOW
+	MVI B,85H
+	CPI 05H ; FETCH PC???
+	JZ SHOW
+	; Ignore HDWR_STEP
+	
+LINE_1:
+	MVI A,FDH ; Line 11111101
+	STA 2800H
+	LDA 1800H ; Read column
+	MVI B,07H 
+	ANA B ; 0 the first 5 MSB
+	MVI B,84H
+	CPI 06H ; INSTR_STEP???
+	JZ SHOW
+	MVI B,80H
+	CPI 05H ; FETCH PC???
+	JZ SHOW
+	MVI B,82H
+	CPI 03H ; FETCH ADRS???
+	JZ SHOW
+
+LINE_2:
+	MVI A,FBH ; Line 11111011
+	STA 2800H
+	LDA 1800H ; Read column
+	MVI B,07H 
+	ANA B ; 0 the first 5 MSB
+	MVI B,00H
+	CPI 06H ; 0???
+	JZ SHOW
+	MVI B,83H
+	CPI 05H ; STORE/INCR???
+	JZ SHOW
+	MVI B,81H
+	CPI 03H ; INCR???
+	JZ SHOW
+
+
+LINE_3:
+	MVI A,F7H ; Line 11110111
+	STA 2800H
+	LDA 1800H ; Read column
+	MVI B,07H 
+	ANA B ; 0 the first 5 MSB
+	MVI B,01H
+	CPI 06H ; 1???
+	JZ SHOW
+	MVI B,02H
+	CPI 05H ; 2???
+	JZ SHOW
+	MVI B,03H
+	CPI 03H ; 3???
+	JZ SHOW
+
+LINE_4:
+	MVI A,EFH ; Line 11101111
+	STA 2800H
+	LDA 1800H ; Read column
+	MVI B,07H 
+	ANA B ; 0 the first 5 MSB
+	MVI B,04H
+	CPI 06H ; 4???
+	JZ SHOW
+	MVI B,05H
+	CPI 05H ; 5???
+	JZ SHOW
+	MVI B,06H
+	CPI 03H ; 6???
+	JZ SHOW
+
+LINE_5:
+	MVI A,DFH ; Line 11011111
+	STA 2800H
+	LDA 1800H ; Read column
+	MVI B,07H 
+	ANA B ; 0 the first 5 MSB
+	MVI B,07H
+	CPI 06H ; 7???
+	JZ SHOW
+	MVI B,08H
+	CPI 05H ; 8???
+	JZ SHOW
+	MVI B,09H
+	CPI 03H ; 9???
+	JZ SHOW
+
+LINE_6:
+	MVI A,BFH ; Line 10111111
+	STA 2800H
+	LDA 1800H ; Read column
+	MVI B,07H 
+	ANA B ; 0 the first 5 MSB
+	MVI B,0AH
+	CPI 06H ; A???
+	JZ SHOW
+	MVI B,0BH
+	CPI 05H ; B???
+	JZ SHOW
+	MVI B,0CH
+	CPI 03H ; C???
+	JZ SHOW
+
+LINE_7:
+	MVI A,7FH ; Line 01111111
+	STA 2800H
+	LDA 1800H ; Read column
+	MVI B,07H 
+	ANA B ; 0 the first 5 MSB
+	MVI B,0DH
+	CPI 06H ; D???
+	JZ SHOW
+	MVI B,0EH
+	CPI 05H ; E???
+	JZ SHOW
+	MVI B,0FH
+	CPI 03H ; F???
+	JZ SHOW
+
+JMP START ; If nothing pressed, again
+
+SHOW:
+	LXI H,0B04H ; Continue store block
+	MOV A,B
+	ANI 0FH ; 4 LSB
+	MOV M,A
+	INX H
+	MOV A,B
+	ANI F0H ; 4 MSB
+	RLC
+	RLC
+	RLC
+	RLC
+	MOV M,A
+
+	CALL STDM
+	CALL DCD
+	JMP START
+
+END

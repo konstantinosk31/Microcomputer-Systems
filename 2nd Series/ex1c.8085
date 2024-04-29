@@ -1,0 +1,28 @@
+IN 10H
+MVI B,00H ; 0-127 counter
+MVI D,00H ; Counter of nums
+
+L1:
+MOV A,B
+CPI 10H ; Is B < 10H?
+JC ISEND ; If yes, loop if not end
+CPI 60H ; Is B < 60H?
+JC YES ; If yes, 10H<=X<60H
+JZ YES ; X = 60H
+JNZ ISEND ; else loop
+
+YES:
+INR D
+
+ISEND:
+INR B
+MOV A,B
+CPI 80H
+JC L1	
+
+; VISUALIZATION OF RESULT IN MEMORY
+
+MOV A,D
+STA 0830H
+
+END
