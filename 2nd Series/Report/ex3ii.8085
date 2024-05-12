@@ -1,0 +1,24 @@
+MVI A,00H
+
+SWITCH_LIGHTS:
+STA 3000H
+
+INPUT:
+CALL KIND
+MOV B,A ; Store input in B register
+CPI 00H ; Comp input with zero
+JZ INPUT ; If zero, new input
+CPI 09H ; Comp with 9
+JC L1 ; If 1 <= input < 9, valid 
+JNC INPUT ; Else new input
+
+L1:
+MVI A,00H ; Init A
+L2: 
+DCR B
+JZ SWITCH_LIGHTS
+RLC
+INR A ; Next led on too
+JMP L2
+
+END

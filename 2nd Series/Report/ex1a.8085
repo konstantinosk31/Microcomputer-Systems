@@ -1,0 +1,13 @@
+IN 10H
+MVI A,00H ; A register is our counter
+LXI B,0900H ; Ad counter
+
+L1:
+STAX B
+INR A
+INR C
+CPI 80H
+JC L1
+
+END
+

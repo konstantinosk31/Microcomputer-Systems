@@ -1,0 +1,29 @@
+IN 10H
+LXI B,0000H ; Our 1s counter
+MVI D,00H ; 0-127 Counter
+MVI E,01H ; 1 tester
+
+
+L2:
+MOV A,D
+ANA E
+CPI 00H
+JZ IFEND ; If 0
+INX B
+IFEND: MOV A,E
+	RLC
+	MOV E,A
+	JNC L2
+INR D
+MVI E,01H
+MOV A,D
+CPI 80H
+JC L2
+
+; We print the result
+MOV A,C
+STA 0A20H
+MOV A,B
+STA 0A21H
+
+END

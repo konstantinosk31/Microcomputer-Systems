@@ -1,0 +1,26 @@
+MVI B,00H
+
+SWITCH_LIGHTS:
+MOV A,B
+RRC
+CMA
+STA 3000H
+
+INPUT:
+LDA 2000H ; Read input in register A
+MOV C,A ; Store input
+MVI B,01H ; Position of open switch
+
+SEARCH: ;Rotate right till overflow
+MOV A,B
+RLC ; Position update
+MOV B,A
+JC SWITCH_LIGHTS
+MOV A,C
+RRC
+MOV C,A
+JC SWITCH_LIGHTS
+JNC SEARCH
+
+
+END
